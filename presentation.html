@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProjectBuddy — Project Presentation Deck</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0a66c2;
+            --navy: #0f2744;
+            --accent: #057642;
+            --highlight: #e65100;
+            --bg: #1a1e24;
+            --slide-bg: #ffffff;
+            --text-dark: #191919;
+            --text-muted: #555555;
+            --border: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Top Bar */
+        .top-controls {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .deck-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .deck-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-action {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .btn-action:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        /* Slide Stage */
+        .slide-stage {
+            width: 100%;
+            max-width: 1100px;
+            aspect-ratio: 16 / 9;
+            background: var(--slide-bg);
+            border-radius: 12px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+            color: var(--text-dark);
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            padding: 50px 60px;
+            display: none;
+            flex-direction: column;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Slide Components */
+        .slide-tag {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .slide-header {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--navy);
+            margin-bottom: 28px;
+            line-height: 1.2;
+        }
+
+        .slide-cover {
+            background: var(--navy);
+            color: white;
+            justify-content: center;
+            padding: 60px 80px;
+        }
+
+        .slide-cover h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin: 10px 0 16px;
+            line-height: 1.1;
+        }
+
+        .slide-cover p {
+            font-size: 1.3rem;
+            color: #dce6f2;
+            max-width: 800px;
+            line-height: 1.6;
+        }
+
+        .cover-badges {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .cover-badge {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* 3-Col & 2-Col Grids */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            flex: 1;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            flex: 1;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            flex: 1;
+        }
+
+        .card {
+            background: #f8f9fa;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            font-size: 0.92rem;
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        .card-list li {
+            position: relative;
+            padding-left: 18px;
+        }
+
+        .card-list li::before {
+            content: "•";
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
+        .notice-banner {
+            background: #ede7f6;
+            border: 1px solid #d1c4e9;
+            padding: 16px 20px;
+            border-radius: 8px;
+            color: #4a148c;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .notice-banner strong {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 1rem;
+        }
+
+        /* Step Card */
+        .step-num {
+            font-size: 0.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+
+        /* Bottom Controls */
+        .bottom-controls {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px;
+            color: #aaa;
+            font-size: 0.85rem;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-nav {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .btn-nav:hover {
+            background: var(--primary);
+        }
+
+        @media (max-width: 900px) {
+            .slide-stage {
+                aspect-ratio: auto;
+                min-height: 600px;
+            }
+            .grid-3, .grid-4, .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-controls">
+        <div class="deck-title">
+            <i class="fas fa-rocket" style="color:var(--primary);"></i> ProjectBuddy Presentation Deck
+        </div>
+        <div class="deck-actions">
+            <a href="ProjectBuddy_Presentation.pptx" download class="btn-action">
+                <i class="fas fa-download"></i> Download .PPTX
+            </a>
+            <a href="index.html" class="btn-action">
+                <i class="fas fa-arrow-left"></i> Back to Website
+            </a>
+            <button class="btn-action" onclick="toggleFullScreen()">
+                <i class="fas fa-expand"></i> Fullscreen
+            </button>
+        </div>
+    </div>
+
+    <div class="slide-stage" id="slideStage">
+
+        <!-- SLIDE 1: Title -->
+        <div class="slide slide-cover active" id="slide-1">
+            <div class="slide-tag" style="color:#64b5f6;">Academic Collaboration Platform</div>
+            <h1>ProjectBuddy</h1>
+            <p>The verified LinkedIn for university students with an <strong>Anti-Theft Idea Vault</strong> and <strong>Zero-Knowledge Administrative Monitoring</strong>.</p>
+            <div class="cover-badges">
+                <span class="cover-badge"><i class="fas fa-shield-alt"></i> Anti-Theft Idea Vault</span>
+                <span class="cover-badge"><i class="fas fa-bolt"></i> 90%+ Skill-Match Engine</span>
+                <span class="cover-badge"><i class="fas fa-user-secret"></i> Anonymous Admin Audit</span>
+                <span class="cover-badge"><i class="fas fa-comments"></i> Live Partner Chat</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: Problem Statement -->
+        <div class="slide" id="slide-2">
+            <div class="slide-tag">Problem Analysis</div>
+            <div class="slide-header">The Dilemma: Why Great Student Ideas Die Alone</div>
+            <div class="grid-3">
+                <div class="card">
+                    <div class="card-title" style="color:var(--highlight);"><i class="fas fa-lock"></i> Fear of Idea Theft</div>
+                    <ul class="card-list">
+                        <li>Students hesitate to share creative blueprints on open groups or Discord servers.</li>
+                        <li>Posting full project architectures risks premature copying by peers before launch.</li>
+                        <li>Result: Students work in isolation, miss hackathons, or abandon ideas.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-title" style="color:var(--primary);"><i class="fas fa-puzzle-piece"></i> Skill Mismatch</div>
+                    <ul class="card-list">
+                        <li>Modern projects require multi-disciplinary skills: AI + IoT + Design + Cloud.</li>
+                        <li>Students rarely know peers outside their section or department.</li>
+                        <li>No objective compatibility scoring to evaluate prospective teammates.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-title" style="color:var(--navy);"><i class="fas fa-scale-balanced"></i> Surveillance & Bias</div>
+                    <ul class="card-list">
+                        <li>Campus forums expose student ideas to staff grading bias and surveillance.</li>
+                        <li>Unmoderated channels suffer from academic spam, phishing, and ghosting.</li>
+                        <li>Lack of privacy-preserving governance to protect student IP.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: The Solution -->
+        <div class="slide" id="slide-3">
+            <div class="slide-tag">Value Proposition</div>
+            <div class="slide-header">The Solution: Safe & Verified Collaboration</div>
+            <div class="grid-2">
+                <div class="card" style="background:#f0f7ff; border-color:#bbdefb;">
+                    <div class="card-title" style="color:var(--primary);"><i class="fas fa-shield-halved"></i> What Makes ProjectBuddy Unique</div>
+                    <ul class="card-list">
+                        <li><strong>Anti-Theft Idea Vault:</strong> Only the project title and tech stack are public. Full blueprints remain 100% encrypted.</li>
+                        <li><strong>Mutual Lock & Key:</strong> Detailed architecture is unlocked ONLY when the creator accepts a partnership proposal.</li>
+                        <li><strong>Skill Compatibility Engine:</strong> Real-time match percentage calculation (e.g. 92% Match).</li>
+                        <li><strong>Anonymous Admin Audit:</strong> Institutional oversight with zero student surveillance.</li>
+                    </ul>
+                </div>
+                <div class="card" style="background:#f1f8e9; border-color:#c8e6c9;">
+                    <div class="card-title" style="color:var(--accent);"><i class="fas fa-chart-line"></i> Measurable Academic Impact</div>
+                    <ul class="card-list">
+                        <li><strong>10x Increase in Idea Sharing:</strong> Students post freely knowing their IP cannot be copied.</li>
+                        <li><strong>Interdisciplinary Pairing:</strong> Seamless cross-pollination between CS, EE, Data Science, and Design.</li>
+                        <li><strong>Reduced Formation Time:</strong> Partner search cycles cut from weeks down to hours.</li>
+                        <li><strong>Higher Project Completion:</strong> Mutual collaboration commitments keep teams accountable.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: Idea Vault Deep Dive -->
+        <div class="slide" id="slide-4">
+            <div class="slide-tag">Core Architecture</div>
+            <div class="slide-header">Feature 1: The Anti-Theft Idea Vault</div>
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-title" style="color:var(--navy);"><i class="fas fa-eye"></i> 1. Public Discovery State</div>
+                    <ul class="card-list">
+                        <li><strong>Title:</strong> Visible across directory (e.g. "AI Study Planner")</li>
+                        <li><strong>Domain:</strong> Categorized by academic department</li>
+                        <li><strong>Difficulty:</strong> Beginner / Intermediate / Advanced badge</li>
+                        <li><strong>Required Skills:</strong> Tech stack tags for filtering</li>
+                        <li><strong style="color:var(--highlight);">ENCRYPTED BLUEPRINT:</strong> Detailed implementation, architecture diagrams, and methodology are shielded behind a lock box.</li>
+                    </ul>
+                </div>
+                <div class="card" style="background:#f1f8e9; border-color:#c8e6c9;">
+                    <div class="card-title" style="color:var(--accent);"><i class="fas fa-lock-open"></i> 2. Unlocked Partnership State</div>
+                    <ul class="card-list">
+                        <li><strong>Trigger:</strong> Creator reviews proposal and clicks "Accept".</li>
+                        <li><strong>Access:</strong> Full project description unlocks for the partner.</li>
+                        <li><strong>Collaboration Room:</strong> Dedicated workspace with live messaging and milestone progress tracking.</li>
+                        <li><strong>Digital NDA:</strong> Mutual trust agreement activated automatically.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: Anonymous Admin Audit -->
+        <div class="slide" id="slide-5">
+            <div class="slide-tag">Governance & Privacy</div>
+            <div class="slide-header">Feature 2: Zero-Knowledge Administrative Audit</div>
+            <div class="notice-banner">
+                <strong><i class="fas fa-user-secret"></i> Zero-Knowledge Administrative Monitoring Protocol</strong>
+                All personal identifiers (legal full names, personal phone numbers, institutional email addresses, and unreleased private blueprints) are strictly scrubbed. Administrators monitor platform safety purely via pseudonymized tokens.
+            </div>
+            <div class="grid-3">
+                <div class="card">
+                    <div class="card-title"><i class="fas fa-mask"></i> Anonymous Telemetry</div>
+                    <ul class="card-list">
+                        <li>Displays tokens like <code>STU_#849201</code>.</li>
+                        <li>Tracks activity by department and year.</li>
+                        <li>Allows freezing malicious actors without uncovering their personal identity.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-title"><i class="fas fa-bullhorn"></i> Sitewide Broadcasts</div>
+                    <ul class="card-list">
+                        <li>Push real-time alert banners to all student screens.</li>
+                        <li>Ideal for hackathon announcements, deadlines, and security reminders.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-title"><i class="fas fa-gavel"></i> Title Moderation</div>
+                    <ul class="card-list">
+                        <li>Audit published project titles for community standards.</li>
+                        <li>1-click takedown of spam or abusive entries while private drafts remain hidden.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: Partner Collaboration Room -->
+        <div class="slide" id="slide-6">
+            <div class="slide-tag">Interactive Features</div>
+            <div class="slide-header">Feature 3: Partner Collaboration Room & Live Chat</div>
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-title" style="color:var(--navy);"><i class="fas fa-list-check"></i> Project Milestones Checklist</div>
+                    <ul class="card-list">
+                        <li><strong>Stage 1:</strong> Problem Definition & Research Baseline</li>
+                        <li><strong>Stage 2:</strong> System Architecture & Component Diagrams</li>
+                        <li><strong>Stage 3:</strong> Functional Prototype Implementation</li>
+                        <li><strong>Stage 4:</strong> Testing, Documentation & Showcase Demo</li>
+                        <li>Interactive checkboxes update the completion progress pill (e.g. <code>2/4 Done</code>).</li>
+                    </ul>
+                </div>
+                <div class="card" style="background:#f8fafc;">
+                    <div class="card-title" style="color:var(--primary);"><i class="fas fa-comments"></i> In-Platform Discussion Stream</div>
+                    <ul class="card-list">
+                        <li>Direct live messaging stream between approved teammates.</li>
+                        <li>No need to exchange private phone numbers or external handles early on.</li>
+                        <li>Full context of the unlocked blueprint is visible right alongside discussion.</li>
+                        <li>Access restricted to verified project collaborators only.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: Technical Architecture -->
+        <div class="slide" id="slide-7">
+            <div class="slide-tag">System Stack</div>
+            <div class="slide-header">Technical Architecture & Stack</div>
+            <div class="grid-4">
+                <div class="card">
+                    <div class="card-title" style="font-size:1.05rem;"><i class="fab fa-js-square"></i> Frontend</div>
+                    <ul class="card-list">
+                        <li>Single Page Application</li>
+                        <li>Semantic HTML5 & Modern CSS</li>
+                        <li>Vanilla JS Reactive Controller</li>
+                        <li>FontAwesome 6 Icons</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-title" style="font-size:1.05rem;"><i class="fab fa-node-js"></i> Backend API</div>
+                    <ul class="card-list">
+                        <li>Node.js & Express REST API</li>
+                        <li>JWT Bearer Authentication</li>
+                        <li>Bcrypt Password Hashing</li>
+                        <li>Express-Validator Sanity</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-title" style="font-size:1.05rem;"><i class="fas fa-database"></i> Database</div>
+                    <ul class="card-list">
+                        <li>MongoDB & Mongoose ODM</li>
+                        <li>User & Role Schemas</li>
+                        <li>Project Blueprint Schemas</li>
+                        <li>Collaboration Chat Schemas</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-title" style="font-size:1.05rem;"><i class="fas fa-shield"></i> Dual Mode</div>
+                    <ul class="card-list">
+                        <li>Runs Standalone in Browser</li>
+                        <li>Connected Full-Stack API</li>
+                        <li>Zero-Knowledge IP Policy</li>
+                        <li>Automated Seed Pipeline</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: User Journey -->
+        <div class="slide" id="slide-8">
+            <div class="slide-tag">User Experience</div>
+            <div class="slide-header">End-to-End User Journey</div>
+            <div class="grid-4">
+                <div class="card">
+                    <div class="step-num">Step 1</div>
+                    <div class="card-title" style="font-size:1.05rem;">Student Register</div>
+                    <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.5;">Student registers with university credentials, academic department, year, and specific skill tags.</p>
+                </div>
+                <div class="card">
+                    <div class="step-num">Step 2</div>
+                    <div class="card-title" style="font-size:1.05rem;">Post Project</div>
+                    <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.5;">Student enters public title and private idea blueprint. Platform locks blueprint automatically.</p>
+                </div>
+                <div class="card">
+                    <div class="step-num">Step 3</div>
+                    <div class="card-title" style="font-size:1.05rem;">Discovery & Proposal</div>
+                    <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.5;">Peers browse titles, see compatibility score (e.g. 92%), and dispatch a partnership proposal.</p>
+                </div>
+                <div class="card">
+                    <div class="step-num">Step 4</div>
+                    <div class="card-title" style="font-size:1.05rem;">Unlock & Build</div>
+                    <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.5;">Creator accepts proposal. Full blueprint unlocks, and partners collaborate in the live chat room.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: Security & Privacy Guarantee -->
+        <div class="slide" id="slide-9">
+            <div class="slide-tag">Security Framework</div>
+            <div class="slide-header">Security, Privacy & IP Safeguards</div>
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-title" style="color:var(--primary);"><i class="fas fa-user-lock"></i> Student IP Safeguards</div>
+                    <ul class="card-list">
+                        <li><strong>No Scraping:</strong> REST API sanitizes description fields unless request is from creator or accepted partner.</li>
+                        <li><strong>Timestamp Priority:</strong> Cryptographic timestamps prove concept origination date.</li>
+                        <li><strong>Mutual Commitment:</strong> Digital agreement guarantees fair project attribution.</li>
+                        <li><strong>Reporting Desk:</strong> Students can flag duplicate or plagiarized project titles.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-title" style="color:var(--accent);"><i class="fas fa-shield-virus"></i> Zero-Knowledge Admin Safeguards</div>
+                    <ul class="card-list">
+                        <li><strong>Zero PII Exposure:</strong> Real names, emails, and phone numbers are absent from admin views.</li>
+                        <li><strong>Pseudonymized Auditing:</strong> Accounts are inspected as anonymous tokens (e.g. <code>STU_#4820</code>).</li>
+                        <li><strong>Shielded Blueprints:</strong> Administrators cannot view private idea texts, eliminating institutional bias.</li>
+                        <li><strong>Safe Intervention:</strong> Spam or malicious accounts are frozen without invading student privacy.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: Conclusion -->
+        <div class="slide slide-cover" id="slide-10">
+            <div class="slide-tag" style="color:#64b5f6;">Summary & Outlook</div>
+            <h1>Empowering Students to Build Without Fear</h1>
+            <p>ProjectBuddy bridges the gap between creative student ideation and secure execution.</p>
+            <div style="margin-top:24px; display:flex; flex-direction:column; gap:10px; font-size:1.1rem;">
+                <div>✔ <strong>Solved Idea Theft:</strong> Public title index + Encrypted private blueprint</div>
+                <div>✔ <strong>Solved Partner Finding:</strong> Algorithmic skill matching & interdisciplinary discovery</div>
+                <div>✔ <strong>Solved Safe Governance:</strong> Zero-knowledge anonymous administrative telemetry</div>
+                <div>✔ <strong>Next Steps:</strong> Inter-college hackathon integration, AI roadmap synthesizer</div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="bottom-controls">
+        <div>Slide <span id="currentSlideNum">1</span> of <span id="totalSlidesNum">10</span></div>
+        <div class="nav-buttons">
+            <button class="btn-nav" onclick="prevSlide()"><i class="fas fa-chevron-left"></i> Previous</button>
+            <button class="btn-nav" onclick="nextSlide()">Next <i class="fas fa-chevron-right"></i></button>
+        </div>
+        <div>Tip: Use <kbd>←</kbd> and <kbd>→</kbd> arrow keys to navigate</div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 10;
+
+        function updateSlide() {
+            document.querySelectorAll('.slide').forEach((s, idx) => {
+                s.classList.toggle('active', idx + 1 === currentSlide);
+            });
+            document.getElementById('currentSlideNum').textContent = currentSlide;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 1) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+
+        function toggleFullScreen() {
+            const elem = document.getElementById('slideStage');
+            if (!document.fullscreenElement) {
+                elem.requestFullscreen().catch(err => alert(`Error: ${err.message}`));
+            } else {
+                document.exitFullscreen();
+            }
+        }
+    </script>
+</body>
+</html>
